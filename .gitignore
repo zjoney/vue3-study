@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/Vue3-component 1/node_modules
+/Vue3-component 1/docs/node_modules
 /.pnp
 .pnp.js
 
