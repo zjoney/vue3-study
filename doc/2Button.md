@@ -2,6 +2,7 @@ Button组件#
 一.定义组件所需Props#
 components/button/src/button.ts
 
+```js
 import { ExtractPropTypes, PropType } from 'vue'
 
 export type Size = 'tiny' | 'small' | 'medium' | 'large'
@@ -51,56 +52,10 @@ export const buttonEmits = {
 }
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>
 export type buttonEmits = typeof buttonEmits
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
+```
+
 二.button.vue 结构实现#
+```js
 <template>
   <button
     :class="[
@@ -131,37 +86,11 @@ const emit = defineEmits(buttonEmits)
 
 const bem = createNamespace('button')
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-三.Button入口编写#
+```
+
+三.Button入口编写
+```js
+
 import { withInstall } from '@zi-shui/utils/withInstall'
 import _Button from './src/button.vue'
 
@@ -175,20 +104,11 @@ declare module 'vue' {
     ZButton: typeof Button
   }
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-四.Button组件试用#
+```
+
+四.Button组件试用
+```js
+
 <ZButton
     :disabled="true"
     :loading="true"
@@ -196,13 +116,7 @@ declare module 'vue' {
     type="primary"
     size="tiny"
  >爱你😘</ZButton>
-1
-2
-3
-4
-5
-6
-7
+ ```
 五.组件功能实现#
 1).样式编写#
 先准备点公共样式，放到theme-chalk/src/common/var.scss
@@ -214,13 +128,7 @@ $color-success: #67c23a;
 $color-warning: #e6a23c;
 $color-danger: #f56c6c;
 $color-info: #909399;
-1
-2
-3
-4
-5
-6
-7
+
 @use 'mixins/mixins' as *;
 @use 'common/var' as *;
 
@@ -292,77 +200,6 @@ $color-info: #909399;
     @include button-variant($color-white, $color-info, $color-info);
   }
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
 提供scss的辅助方法，方便后续使用
 
 @mixin button-variant($color, $background-color, $border-color) {
@@ -370,11 +207,7 @@ $color-info: #909399;
     background: $background-color;
     border-color: $border-color;
 }
-1
-2
-3
-4
-5
+
 2).插槽显示处理#
 编写个loading组件用于显示loading 、loadingIcon.vue
 
@@ -397,25 +230,7 @@ $color-info: #909399;
 <script lang="ts" setup>
 import ZIcon from '@zi-shui/components/icon'
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
+
 3).实现功能#
 <template>
   <button
@@ -465,54 +280,7 @@ const handleClick = (e: MouseEvent) => {
   emit('click', e)
 }
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
+
 六.文档编写#
 # 按钮 Button
 
