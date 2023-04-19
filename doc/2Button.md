@@ -1,4 +1,4 @@
-Button组件#
+# Button组件
 一.定义组件所需Props#
 components/button/src/button.ts
 

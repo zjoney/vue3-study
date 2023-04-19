@@ -1,4 +1,4 @@
-FormItem组件#
+# FormItem组件
 一.定义FormItem Props#
 import { ExtractPropTypes, PropType } from 'vue'
 import type { RuleItem } from 'async-validator'
