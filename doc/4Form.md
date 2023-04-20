@@ -1,5 +1,6 @@
 # FormItem组件
-一.定义FormItem Props#
+一.定义FormItem Props
+```js
 import { ExtractPropTypes, PropType } from 'vue'
 import type { RuleItem } from 'async-validator'
 export type Arrayable<T> = T | T[]
@@ -20,31 +21,12 @@ export const formItemProps = {
   }
 } as const
 export type FormItem = ExtractPropTypes<typeof formItemProps>
+```
 
 
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-二.form-item结构实现#
+
+二.form-item结构实现
+```js
 <template>
   <div :class="formItemClasses">
     <!-- label属性 -->
@@ -86,59 +68,20 @@ const shouldShowError = computed(() => {
   return validateState.value === 'error' && props.showMessage
 })
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-三.Form-item入口编写#
+```
+
+三.Form-item入口编写
+```js
+
 import _FormItem from './src/form-item.vue'
 import { withInstall } from '@zi-shui/utils/withInstall'
 
 export const FormItem = withInstall(_FormItem)
 export type FormItemInstance = InstanceType<typeof FormItem>
-1
-2
-3
-4
-5
-四.Form-item组件试用#
+```
+
+四.Form-item组件试用
+```js
 <script setup lang="ts">
 import { ref } from 'vue'
 const value = ref('')
@@ -148,17 +91,11 @@ const value = ref('')
     <z-input v-model="value"></z-input>
   </z-form-item>
 </template>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-五.组件功能实现#
-1).样式编写#
+```
+
+五.组件功能实现
+1).样式编写
+```js
 @use 'mixins/mixins' as *;
 @use 'common/var' as *;
 @include b(form-item) {
@@ -181,28 +118,8 @@ const value = ref('')
     font-size: 12px;
   }
 } ;
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
+```
+
 2).FormItem校验#
 <z-form-item
     label="用户名"
@@ -214,16 +131,7 @@ const value = ref('')
 >
   <z-input v-model="value"></z-input>
 </z-form-item>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
 form/src/form-item.ts
 
 // 生成formItemContext上下文, 增添校验方法
@@ -232,12 +140,7 @@ export interface FormItemContext extends FormItemProps {
 }
 // injectKey的生成
 export const formItemContextKey: InjectionKey<FormItemContext> = Symbol()
-1
-2
-3
-4
-5
-6
+
 依赖注入
 
 // 对规则进行格式化
@@ -271,37 +174,7 @@ const context: FormItemContext = {
   validate
 }
 provide(formItemContextKey, context)
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
+
 在input组件中触发校验
 
 const formItem = inject(formItemContextKey)
@@ -316,20 +189,10 @@ const handleBlur = (event: FocusEvent) => {
   emit('blur', event)
   formItem?.validate?.('blur')
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
+
 Form组件#
 一.定义Form Props#
+```js
 import { ExtractPropTypes, InjectionKey, PropType, SetupContext } from 'vue'
 import { FormItemRule, Arrayable } from './form-item'
 
@@ -352,29 +215,10 @@ export type FormContext = FormProps
 // 表单上下文key, 包含所有props
 export const formContextKey: InjectionKey<FormContext> =
   Symbol('formContextKey')
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
+```
+
 二.Form结构实现#
+```js
 <template>
   <form :class="[bem.b()]">
     <slot></slot>
@@ -397,29 +241,10 @@ provide(
   })
 )
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
+```
+
 三.Form入口实现#
+```js
 import _FormItem from './src/form-item.vue'
 import _Form from './src/form.vue'
 import { withInstall } from '@zi-shui/utils/withInstall'
@@ -429,17 +254,11 @@ export const Form = withInstall(_Form)
 
 export type FormItemInstance = InstanceType<typeof FormItem>
 export type FormInstance = InstanceType<typeof Form>
-1
-2
-3
-4
-5
-6
-7
-8
-9
+```
+
 四,FormItem组件功能实现#
 1).根据表单属性提示错误#
+```js
 // 注入表单上下文
 const formContext = inject(formContextKey)
 const shouldShowError = computed(() => {
@@ -450,18 +269,11 @@ const shouldShowError = computed(() => {
     formContext?.showMessage
   )
 })
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+```
+
 2).合并表单规则#
 // 对规则进行格式化
+```js
 const convertArray = (rules: Arrayable<FormItemRule> | undefined) => {
   return rules ? (Array.isArray(rules) ? rules : [rules]) : []
 }
@@ -477,22 +289,7 @@ const _rules = computed(() => {
   }
   return rules
 })
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
+
 // form-item校验方法
 const onValidationSucceeded = (state: FormItemValidateState) => {
   validateState.value = state
@@ -523,39 +320,12 @@ const validate: FormItemContext['validate'] = async trigger => {
       return Promise.reject(err.fields)
     })
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
+```
+
 五.Form组件功能实现#
 声明validate事件，传递给Formitem中,这样在校验时子组件可以触发父组件的方法
 
+```js
 export const formEmits = {
   validate: (prop: string, isValid: boolean, message: string) =>
     typeof isValid === 'boolean' && isString(message) && isString(prop)
@@ -568,18 +338,7 @@ export type FormContext = FormProps & {
 // 表单上下文key, 包含所有props, 暴露自己的方法
 export const formContextKey: InjectionKey<FormContext> =
   Symbol('formContextKey')
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
+
 const emit = defineEmits(formEmits)
 const fields: FormItemContext[] = []
 
@@ -595,37 +354,21 @@ provide(
     addField
   })
 )
+```
 
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
+
 1).FormItem共享上下文#
+```js
 onMounted(() => {
   if (props.prop) {
     // 如果有属性，就让其收集上下文
     formContext?.addField(context)
   }
 })
-1
-2
-3
-4
-5
-6
+```
+
 2).触发父级检测方法#
+```js
 const onValidationSucceeded = (state: FormItemValidateState) => {
   validateState.value = state
   formContext?.emit('validate', props.prop!, true, '')
@@ -636,17 +379,10 @@ const onValidationFailed = (err: Values) => {
   validateMessage.value = errors ? errors[0].message : ''
   formContext?.emit('validate', props.prop!, false, validateMessage.value)
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+```
+
 3).暴露检测方法#
+```js
 // 为了使用ref可以调用validate方法
 const validate = async (
   callback?: (valid: boolean, fields?: Values) => void
@@ -668,28 +404,10 @@ const validate = async (
 defineExpose({
   validate
 })
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
+```
+
 使用表单组件#
+```js
 <script setup lang="ts">
 import { FormInstance } from '@zi-shui/components/form'
 import { Values } from 'async-validator'
@@ -734,3 +452,4 @@ const validate = (prop: string, isValid: boolean, nesssage: string) => {
     </z-form-item>
   </z-form>
 </template>
+```
