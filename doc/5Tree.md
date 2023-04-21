@@ -3,7 +3,7 @@
 组件的基本应用，传入数据即可根据数据渲染树组件
 
 <z-tree :data="data"></z-tree>
-1
+
 定义树中所需的基本props属性
 
 // 树的数据类型
@@ -43,43 +43,8 @@ export const treeProps = {
   }
 } as const
 export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
+
+
 我们需要对用户传入的数据进行格式化后在使用。格式化后的props是这个酱紫的~
 
 export interface TreeNode extends Required<TreeOption>{
@@ -87,11 +52,8 @@ export interface TreeNode extends Required<TreeOption>{
   children: Array<TreeNode> // 儿子数组
   rawNode: TreeOption // 原始的node
 }
-1
-2
-3
-4
-5
+
+
 import { withInstall } from '@zi-shui/utils/with-install'
 import _Tree from './src/tree.vue'
 const Tree = withInstall(_Tree) // 生成带有install方法的组件
@@ -102,16 +64,8 @@ declare module 'vue' {
   }
 }
 export * from './src/tree'
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
+
 二.数据格式化和组件渲染#
 1.创建渲染数据#
 function createData(level = 4, parentKey = ''): TreeOption[] {
@@ -134,26 +88,8 @@ function createLabel(level: number): string {
   return ''
 }
 const data = ref<TreeOption[]>(createData())
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
+
+
 2.封装获取属性方法#
 <script lang="ts" setup>
 import { createNamespace } from '@zi-shui/utils/create'
@@ -180,31 +116,7 @@ function createTreeOptions(keyField: string, childrenField: string,labelField:st
 }
 const treeOptions = createTreeOptions(props.keyField, props.childrenField,props.labelField)
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
+
 3.数据格式化#
 function createTree(data: TreeOption[], parent: TreeNode | null = null) {
   function traversal(data: TreeOption[], parent: TreeNode | null): TreeNode[] {
@@ -237,37 +149,8 @@ watch(
   },
   { immediate: true }
 )
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
+
+
 4.根据expandedKeys拍平数组#
 const expandedKeySet = ref<Set<Key>>(new Set(props.defaultExpandedKeys))
 const flattenTree = computed(() => {
