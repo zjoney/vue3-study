@@ -177,31 +177,7 @@ const flattenTree = computed(() => {
   }
   return flattenNodes
 })
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
+
 5.渲染Tree组件#
 <div :class="bem.b()">
     <z-tree-node
@@ -216,19 +192,7 @@ function isExpanded(node: TreeNode): boolean {
   return expandedKeySet.value.has(node.key)
 }
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
+
 三.抽离TreeNode组件#
 tree-node组件中需要使用展开图标，这里采用tsx编写内置图标组件
 
@@ -243,17 +207,7 @@ export default defineComponent({
     )
   }
 })
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
+
 需要再vite中配置@vitejs/plugin-vue-jsx插件，才可以正确解析tsx语法
 
 1.定义TreeNodeProps#
@@ -268,17 +222,7 @@ export const treeNodeProps = {
   }
 } as const
 export type TreeNodeProps = Partial<ExtractPropTypes<typeof treeNodeProps>>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
+
 <template>
   <div :class="bem.b()">
     <div :class="bem.e('content')">
@@ -307,34 +251,7 @@ import Switcher from './icon/Switcher'
 const bem = createNamespace('tree-node')
 const props = defineProps(treeNodeProps)
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
+
 2.编写基本样式#
 @use 'mixins/mixins' as *;
 @use 'common/var' as *;
@@ -362,41 +279,14 @@ const props = defineProps(treeNodeProps)
     }
   }
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
+
 3.展开收缩功能#
 定义触发切换的事件
 
 export const treeNodeEvents = {
   toggle:(node:TreeNode)=> node
 }
-1
-2
-3
+
 <div
       :class="bem.e('content')"
 >
