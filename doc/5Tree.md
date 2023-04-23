@@ -309,28 +309,7 @@ const handleExpandIconClick = (node:TreeNode)=>{
   emit('toggle',node); // 触发toggle事件
 }
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
+
 组件监听toggle事件
 
 <z-tree-node
@@ -356,29 +335,8 @@ function toggleExpand(node: TreeNode) {
   }
 }
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
+
+
 4.增加indent值#
 根据层级实现缩进
 
@@ -390,14 +348,7 @@ function toggleExpand(node: TreeNode) {
   </span>
   <span> {{ node.label }}</span>
 </div>
-1
-2
-3
-4
-5
-6
-7
-8
+
 四.树组件异步加载#
 1.构建异步数据#
 <script>
@@ -447,59 +398,12 @@ const handleLoad = (node: TreeOption) => {
 <template>
   <z-tree :data="data" :on-load="handleLoad"></z-tree>
 </template>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
+
 {
   onLoad:Function as PropType<(node:TreeOption)=>Promise<TreeOption[]>>
 }
-1
-2
-3
+
+
 2.实现触发加载#
 const loadingKeysRef = ref(new Set<Key>()) // 存储正在加载的key
 function triggerLoading(node){
@@ -531,36 +435,8 @@ function toggleExpand(node: TreeNode) {
     expand(node)
   }
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
+
+
 3.loading图标实现#
 import { h, defineComponent } from 'vue'
 
@@ -581,25 +457,8 @@ export default defineComponent({
     )
   }
 })
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
+
+
 将loadingKeys列表传入
 
 <z-tree-node
@@ -609,23 +468,14 @@ export default defineComponent({
       @toggle="toggleExpand"
       :loadingKeys="loadingKeysRef"
 ></z-tree-node>
-1
-2
-3
-4
-5
-6
-7
+
+
 export const treeNodeProps = {
   loadingKeys:{
     type:Object as PropType<Set<Key>>
   }
 } as const
-1
-2
-3
-4
-5
+
 根据传入的loadingKeys判断是否需要显示loading图标
 
 <z-icon>
@@ -637,15 +487,7 @@ const isLoading = computed(() => {
   return props.loadingKeys?.has(props.node.key)
 })
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
+
 五.实现禁用、多选节点#
 1.计算选中列表#
 <z-tree :data="data" selectable v-model:selected-keys="value"></z-tree>
