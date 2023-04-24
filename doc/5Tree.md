@@ -491,7 +491,7 @@ const isLoading = computed(() => {
 五.实现禁用、多选节点#
 1.计算选中列表#
 <z-tree :data="data" selectable v-model:selected-keys="value"></z-tree>
-1
+
 export const treeProps = {
   multiple: Boolean,
   selectable:{
@@ -503,17 +503,7 @@ export const treeProps = {
 export const treeEvents = {
   'update:selectedKeys':(keys:Key[])=> keys
 } 
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
+
 const emit = defineEmits(treeEvents)
 const selectedKeys = ref<Key[]>([]) // 选中的key列表
 watch(
@@ -548,48 +538,13 @@ function handleSelect(node: TreeNode) {
   }
   emit('update:selectedKeys',keys)
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
+
+
 <z-tree-node
    :selectKeys="selectedKeys"
    @select="handleSelect"
 ></z-tree-node>
-1
-2
-3
-4
+
 export const treeNodeProps = {
   // ...
   selectKeys:{
@@ -599,15 +554,7 @@ export const treeNodeProps = {
 export const treeNodeEvents = {
    select:(node:TreeNode)=> node,
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
+
 2.实现选中状态#
 <div :class="[bem.b(),bem.is('selected',isSelected)]">
     <div
