@@ -566,28 +566,14 @@ export const treeNodeEvents = {
       <span @click="handleContentClick(node)" :class="bem.e('label')"> {{ node.label }}</span>
     </div>
 </div>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
 const isSelected = computed(() => { // 判断是否选中
   return props.selectKeys?.includes(props.node.key)
 })
 const handleContentClick =(node: TreeNode)=>{ // 内容点击触发选择
   emit('select', node)
 }
-1
-2
-3
-4
-5
-6
+
 @include b('tree-node') {
   @include when(selected){
     background-color:#e7f5ee;
@@ -600,18 +586,7 @@ const handleContentClick =(node: TreeNode)=>{ // 内容点击触发选择
     flex:1
   }
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
+
 3.禁用节点#
 const data = ref<TreeOption[]>([
   {
@@ -640,33 +615,7 @@ const data = ref<TreeOption[]>([
     ]
   }
 ])
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
+
 const treeNode: TreeNode = {
   key: treeOptions.getKey(node),
   label: treeOptions.getLabel(node),
@@ -676,21 +625,11 @@ const treeNode: TreeNode = {
   disabled:!!node.disabled, // 添加disabled属性
   rawNode: node
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
+
 <div :class="[bem.b(),bem.is('selected',isSelected),bem.is('disabled',node.disabled)]">
 	<span @click="handleContentClick(node)" :class="[bem.e('label')]"> {{ node.label }}</span>
 </div>
-1
-2
-3
+
 @include b('tree-node') {
   &:not(.is-disabled){
     .z-tree-node__label{
@@ -706,66 +645,38 @@ const treeNode: TreeNode = {
     }
   }
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
+
 在选中节点时判断，节点是否为禁用状态
 
 const handleContentClick =(node: TreeNode)=>{
   if(node.disabled) return;
   emit('select', node)
 }
-1
-2
-3
-4
+
 4.自定义节点内容#
 // 创建上下文对象，提供注入实现
 export interface TreeContext {
   slots: SetupContext['slots'] // 插槽属性
 }
 export const treeInjectionKey: InjectionKey<TreeContext> = Symbol()
-1
-2
-3
-4
-5
+
 provide(treeInjectionKey, {
   slots: useSlots() // 提供slots属性
 });
-1
-2
-3
+
+
 <span @click="handleContentClick(node)" :class="bem.e('label')">
     <ZTreeNodeContent :node="node"></ZTreeNodeContent>
 </span>
-1
-2
-3
+
+
 export const treeNodeContentProps = {
   node: {
     type: Object as PropType<TreeNode>,
     required: true
   }
 } as const
-1
-2
-3
-4
-5
-6
+
 import { defineComponent, inject } from "vue"
 import { treeInjectionKey, treeNodeContentProps } from "./tree"
 
@@ -782,22 +693,7 @@ export default defineComponent({
     }
   }
 })
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
+
 六.可选择的树#
 1.基本功能#
 <z-tree
@@ -808,14 +704,7 @@ export default defineComponent({
     show-checkbox
 >
 </z-tree>
-1
-2
-3
-4
-5
-6
-7
-8
+
 export const treeProps = {
   showCheckbox: {
     type: Boolean,
@@ -826,16 +715,7 @@ export const treeProps = {
     default: () => []
   }
 } as const
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
 在父组件中将属性传递下去~
 
 <z-tree-node
@@ -848,16 +728,7 @@ export const treeProps = {
       @select="handleSelect"
       :show-checkbox="showCheckbox"
 ></z-tree-node>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
 export const treeNodeProps = {
   showCheckbox:{
     type:Boolean,
@@ -867,15 +738,7 @@ export const treeNodeProps = {
   disabled:Boolean,
   indeterminate:Boolean
 } as const
-1
-2
-3
-4
-5
-6
-7
-8
-9
+
  <div :class="[bem.b(),bem.is('selected',isSelected),,bem.is('disabled',node.disabled)]">
     <div
       :class="bem.e('content')"
@@ -889,19 +752,8 @@ export const treeNodeProps = {
       </span>
     </div>
 </div>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
+
+
 2.封装checkbox组件#
 import { ExtractPropTypes, PropType } from "vue";
 export const checkboxProps = {
@@ -921,24 +773,7 @@ export const checkboxEmits = {
   'update:modelValue':(value:boolean | number | string ) => value
 }
 export type CheckboxEmits = typeof checkboxEmits
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
+
 <template>
   <label :class="bem.b()">
     <span :class="bem.e('input')">
@@ -1020,87 +855,7 @@ onMounted(() => {
   indeterminate(props.indeterminate)
 })
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
+
 3.指定tree-node中属性#
 <z-tree-node
       v-for="node in flattenTree"
@@ -1131,35 +886,7 @@ function isIndeterminate(node:TreeNode){
   return true
 }
 </script>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
+
 4.checkbox接收属性#
 <Checkbox
   :indeterminate="indeterminate"
@@ -1167,36 +894,22 @@ function isIndeterminate(node:TreeNode){
   :disabled="disabled"
   @change="handleCheckChange"
 ></Checkbox>
-1
-2
-3
-4
-5
-6
+
 const handleCheckChange = (value: boolean) => {
    emit('check',props.node,value)
 }
-1
-2
-3
+
 export const treeNodeEvents = {
   toggle:(node:TreeNode)=> node,
   select:(node:TreeNode)=> node,
   check: (node: TreeNode,value:boolean) => node
 }
-1
-2
-3
-4
-5
+
 function toggleCheckbox(node: TreeNode, isChecked: boolean) {
   toggle(node,isChecked); // 控制孩子切换
   updateCheckedKeys(node);
 }
-1
-2
-3
-4
+
 这里需要构建panrentKey
 
 const treeNode: TreeNode = {
@@ -1209,16 +922,7 @@ const treeNode: TreeNode = {
         rawNode: node,
         parentKey:parent?.key!,
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
 function toggle(node:TreeNode,isChecked:boolean) {
     let checkKeys = checkedKeySet.value
     if(isChecked){
@@ -1266,53 +970,8 @@ function updateCheckedKeys(node:TreeNode){
        }
     }
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
+
+
 七.虚拟滚动组件#
 import { withInstall } from '@zi-shui/utils/withInstall'
 import _vertual from './src/virtual'
@@ -1326,18 +985,7 @@ declare module 'vue' {
     ZVirtualList: typeof VirtualList
   }
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
+
  <z-virtual-list :items="flattenTree">
       <template #default="{ node,idx }">
         <z-tree-node
@@ -1356,24 +1004,7 @@ declare module 'vue' {
         ></z-tree-node>
       </template>
  </z-virtual-list>
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
+
 import { createNamespace } from "@zi-shui/utils/create";
 import { computed, defineComponent, h, onMounted, reactive, ref } from "vue";
 
@@ -1439,71 +1070,7 @@ export default defineComponent({
     }
   },
 })
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
+
 @use 'mixins/mixins' as *;
 @include b('vl') {
   overflow-y:scroll;
